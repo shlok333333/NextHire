@@ -12,10 +12,14 @@ from resume_analyzer import analyze_resume
 from dotenv import load_dotenv
 load_dotenv(override=True)
 
+
+# Read database configuration
 DB_HOST = os.getenv("DB_HOST") or "localhost"
 DB_USER = os.getenv("DB_USER") or "root"
 DB_PASSWORD = os.getenv("DB_PASSWORD") or ""
 DB_NAME = os.getenv("DB_NAME") or "nexthire"
+
+# Handle empty DB_PORT safely
 DB_PORT = int(os.getenv("DB_PORT") or "3306")
 
 # Connect to MySQL
@@ -26,6 +30,7 @@ db = mysql.connector.connect(
     database=DB_NAME,
     port=DB_PORT
 )
+
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"]=os.path.join(app.root_path,"uploads","resumes")
