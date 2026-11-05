@@ -1,0 +1,132 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+{{ category }} Interview - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page single-interview-page">
+
+    <!-- Page Header -->
+    <div class="single-interview-header">
+
+        <a href="{{ url_for('interview') }}" class="back-link">
+            ← Back to Interview Categories
+        </a>
+
+        <span class="practice-label">INTERVIEW PREPARATION</span>
+
+        <h1>🎤 {{ category }} Interview</h1>
+
+        <p>Practice one question at a time and improve your interview skills.</p>
+
+    </div>
+
+    <!-- Question Progress -->
+    <div class="interview-question-progress">
+
+        <div class="question-progress-info">
+            <strong>Question {{ question_number }} of {{ total_questions }}</strong>
+            <span>{{ ((question_number / total_questions) * 100) | round(0) if total_questions > 0 else 0 }}% Completed</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"
+                 style="--progress: {{ ((question_number / total_questions) * 100) if total_questions > 0 else 0 }}%;">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main Question Card -->
+    <div class="interview-question-card single-question-card">
+
+        <div class="single-question-top">
+
+            <span class="interview-question-number">
+                QUESTION {{ question_number }}
+            </span>
+
+            <span class="interview-difficulty difficulty-{{ question.difficulty|lower }}">
+                {{ question.difficulty }}
+            </span>
+
+        </div>
+
+        <h2>{{ question.question }}</h2>
+
+        <!-- Expandable Guidance -->
+        <details class="interview-guidance">
+
+            <summary>
+                <span>💡 Show Interview Guidance</span>
+                <span class="guidance-arrow">⌄</span>
+            </summary>
+
+            <div class="guidance-content">
+
+                <div class="interview-section expectation-section">
+                    <h4>🎯 What the Interviewer Expects</h4>
+                    <p>{{ question.what_interviewer_expects }}</p>
+                </div>
+
+                <div class="interview-section sample-answer-section">
+                    <h4>💬 Sample Answer</h4>
+                    <p>{{ question.sample_answer }}</p>
+                </div>
+
+                <div class="interview-section key-points-section">
+                    <h4>📌 Key Points to Remember</h4>
+                    <p>{{ question.key_points }}</p>
+                </div>
+
+                <div class="interview-section mistakes-section">
+                    <h4>⚠️ Common Mistakes to Avoid</h4>
+                    <p>{{ question.common_mistakes }}</p>
+                </div>
+
+            </div>
+
+        </details>
+
+    </div>
+
+    <!-- Previous / Next Navigation -->
+    <div class="interview-navigation">
+
+        {% if question_number > 1 %}
+
+            <a class="interview-nav-button previous-button"
+               href="{{ url_for('interview_question', category=category, question_number=question_number - 1) }}">
+                ← Previous Question
+            </a>
+
+        {% else %}
+
+            <span></span>
+
+        {% endif %}
+
+        {% if question_number < total_questions %}
+
+            <a class="interview-nav-button next-button"
+               href="{{ url_for('interview_question', category=category, question_number=question_number + 1) }}">
+                Next Question →
+            </a>
+
+        {% else %}
+
+            <a class="interview-nav-button finish-button"
+               href="{{ url_for('interview') }}">
+                ✅ Finish Practice
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

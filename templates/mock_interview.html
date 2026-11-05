@@ -1,0 +1,106 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Mock Interview - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page mock-interview-page">
+
+    <!-- Page Header -->
+    <div class="mock-page-header">
+
+        <a href="{{ url_for('interview') }}" class="back-link">
+            ← Back to Interview Preparation
+        </a>
+
+        <span class="practice-label">PRACTICE SESSION</span>
+
+        <h1>🎤 Mock Interview</h1>
+
+        <p>
+            Answer each question as if you were attending a real placement interview.
+            Take your time and express your thoughts clearly.
+        </p>
+
+    </div>
+
+    <!-- Interview Progress -->
+    <div class="mock-progress-card">
+
+        <div class="mock-progress-info">
+            <strong>Question {{ question_number }} of 10</strong>
+            <span>{{ (question_number / 10 * 100) | round(0) }}% Completed</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"
+                 style="--progress: {{ question_number / 10 * 100 }}%;">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Question Card -->
+    <div class="interview-question-card mock-question-card">
+
+        <div class="mock-question-meta">
+
+            <span class="mock-category">
+                📚 {{ question.category }}
+            </span>
+
+            <span class="interview-difficulty difficulty-{{ question.difficulty|lower }}">
+                {{ question.difficulty }}
+            </span>
+
+        </div>
+
+        <span class="mock-question-number">
+            QUESTION {{ question_number }}
+        </span>
+
+        <h2>{{ question.question }}</h2>
+
+        <!-- Answer Form -->
+        <form method="POST" class="mock-answer-form">
+
+            <label for="user_answer">
+                Your Answer
+            </label>
+
+            <p class="answer-instruction">
+                Write your answer as you would explain it to an interviewer.
+            </p>
+
+            <textarea
+                id="user_answer"
+                name="user_answer"
+                rows="9"
+                placeholder="Type your answer here...
+
+Try to structure your response clearly. Include relevant examples where appropriate."
+                required
+            ></textarea>
+
+            <div class="mock-submit-section">
+
+                <span class="answer-tip">
+                    💡 Be clear, specific and confident.
+                </span>
+
+                <button type="submit" class="mock-submit-button">
+                    Submit Answer →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

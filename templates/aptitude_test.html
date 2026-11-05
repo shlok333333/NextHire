@@ -1,0 +1,100 @@
+
+{% extends "base.html" %}
+
+{% block title %}Aptitude Test {{ test_number }} - NextHire{% endblock %}
+
+{% block content %}
+
+<section class="practice-page aptitude-test-page">
+
+    <div class="test-page-header">
+        <a href="{{ url_for('aptitude') }}" class="back-link">
+            ← Back to Aptitude
+        </a>
+
+        <span class="practice-label">TEST {{ test_number }}</span>
+
+        <h1>🧠 Aptitude Test {{ test_number }}</h1>
+
+        <p>Read each question carefully and select the correct answer.</p>
+
+        <div class="question-count">
+            📝 {{ questions|length }} Questions
+        </div>
+    </div>
+
+    <form method="POST" class="aptitude-question-form">
+
+        {% for q in questions %}
+
+        <div class="question-card">
+
+            <div class="question-card-heading">
+                <span class="question-number">Question {{ loop.index }}</span>
+                <span class="question-count-label">{{ loop.index }} / {{ questions|length }}</span>
+            </div>
+
+            <h2>{{ q.question }}</h2>
+
+            <div class="answer-options">
+
+                <label class="answer-option">
+                    <input
+                        type="radio"
+                        name="question_{{ q.id }}"
+                        value="A"
+                        required
+                    >
+                    <span class="option-letter">A</span>
+                    <span class="option-text">{{ q.option_a }}</span>
+                </label>
+
+                <label class="answer-option">
+                    <input
+                        type="radio"
+                        name="question_{{ q.id }}"
+                        value="B"
+                    >
+                    <span class="option-letter">B</span>
+                    <span class="option-text">{{ q.option_b }}</span>
+                </label>
+
+                <label class="answer-option">
+                    <input
+                        type="radio"
+                        name="question_{{ q.id }}"
+                        value="C"
+                    >
+                    <span class="option-letter">C</span>
+                    <span class="option-text">{{ q.option_c }}</span>
+                </label>
+
+                <label class="answer-option">
+                    <input
+                        type="radio"
+                        name="question_{{ q.id }}"
+                        value="D"
+                    >
+                    <span class="option-letter">D</span>
+                    <span class="option-text">{{ q.option_d }}</span>
+                </label>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="test-submit-section">
+            <p>Review your answers before submitting your test.</p>
+
+            <button type="submit" class="submit-test-button">
+                Submit Test ✓
+            </button>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

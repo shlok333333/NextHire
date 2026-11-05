@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}NextHire | Learn. Practice. Ace.{% endblock %}
+
+{% block content %}
+
+<section class="home-hero">
+    <div class="hero-content">
+        <span class="hero-label">YOUR PLACEMENT PREPARATION PARTNER</span>
+
+        <h1>Welcome to <span>NextHire</span></h1>
+
+        <h2>Learn. Practice. Ace.</h2>
+
+        <p class="hero-description">
+            Your personal placement preparation platform.
+            Build coding skills, sharpen your aptitude, master interviews
+            and get ready to launch your career.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('signup') }}" class="hero-btn hero-primary">
+                Get Started
+            </a>
+
+            <a href="#features" class="hero-btn hero-secondary">
+                Explore Features
+            </a>
+
+            <a href="{{ url_for('login') }}" class="hero-login">
+                Login
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-image">
+        <img
+            src="{{ url_for('static', filename='images/oglogo.png') }}"
+            alt="NextHire logo"
+        >
+    </div>
+</section>
+
+<section class="home-features" id="features">
+    <div class="features-heading">
+        <span>WHAT YOU CAN DO</span>
+        <h2>Everything you need to prepare for placements</h2>
+        <p>One platform. Multiple ways to become placement-ready.</p>
+    </div>
+
+    <div class="features-grid">
+
+        <a href="{{ url_for('coding') }}" class="feature-link">
+            <div class="home-feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Coding Practice</h3>
+                <p>Practice DSA and coding problems to strengthen your problem-solving skills.</p>
+                <span class="feature-action">Explore coding →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('aptitude') }}" class="feature-link">
+            <div class="home-feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Aptitude Practice</h3>
+                <p>Improve quantitative aptitude, logical reasoning and test performance.</p>
+                <span class="feature-action">Practice aptitude →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('interview') }}" class="feature-link">
+            <div class="home-feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Interview Preparation</h3>
+                <p>Prepare for HR, technical and behavioral interviews with guided practice.</p>
+                <span class="feature-action">Prepare for interviews →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('core') }}" class="feature-link">
+            <div class="home-feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>EE Core</h3>
+                <p>Revise electrical engineering concepts and prepare for core placements.</p>
+                <span class="feature-action">Explore EE Core →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('resume_analyzer') }}" class="feature-link">
+            <div class="home-feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>ATS Resume Analyzer</h3>
+                <p>Analyze your resume, understand your score and discover ways to improve it.</p>
+                <span class="feature-action">Analyze resume →</span>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

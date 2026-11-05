@@ -1,0 +1,138 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Mock Interview - Your Answer
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page mock-answer-page">
+
+    <!-- Page Header -->
+    <div class="mock-answer-header">
+
+        <span class="practice-label">MOCK INTERVIEW REVIEW</span>
+
+        <h1>🎤 Review Your Answer</h1>
+
+        <p>
+            Review your response, understand the expected approach,
+            and learn how to improve your interview answers.
+        </p>
+
+    </div>
+
+    <!-- Progress -->
+    <div class="mock-progress-card">
+
+        <div class="mock-progress-info">
+            <strong>Question {{ question_number }} of 10</strong>
+            <span>{{ (question_number / 10 * 100) | round(0) }}% Completed</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"
+                 style="--progress: {{ question_number / 10 * 100 }}%;">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Question and Answer Card -->
+    <div class="interview-question-card mock-review-card">
+
+        <span class="mock-question-number">
+            QUESTION {{ question_number }}
+        </span>
+
+        <h2 class="mock-review-question">
+            {{ question.question }}
+        </h2>
+
+        <!-- User Answer -->
+        <div class="answer-review-section">
+
+            <div class="answer-review-heading">
+                <span>📝</span>
+                <h3>Your Answer</h3>
+            </div>
+
+            <div class="answer-box">
+                {{ user_answer }}
+            </div>
+
+        </div>
+
+        <!-- Interview Guidance -->
+        <details class="mock-review-guidance">
+
+            <summary>
+                <span>💡 View Interview Guidance</span>
+                <span class="guidance-arrow">⌄</span>
+            </summary>
+
+            <div class="guidance-content">
+
+                <div class="interview-section expectation-section">
+
+                    <h4>🎯 What the Interviewer Expects</h4>
+
+                    <p>{{ question.what_interviewer_expects }}</p>
+
+                </div>
+
+                <div class="interview-section sample-answer-section">
+
+                    <h4>💬 Sample Answer</h4>
+
+                    <p>{{ question.sample_answer }}</p>
+
+                </div>
+
+                <div class="interview-section key-points-section">
+
+                    <h4>📌 Key Points to Remember</h4>
+
+                    <p>{{ question.key_points }}</p>
+
+                </div>
+
+                <div class="interview-section mistakes-section">
+
+                    <h4>⚠️ Common Mistakes to Avoid</h4>
+
+                    <p>{{ question.common_mistakes }}</p>
+
+                </div>
+
+            </div>
+
+        </details>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="interview-navigation">
+
+        {% if question_number < 10 %}
+
+            <a href="{{ url_for('mock_question', mock_id=mock_id, question_number=question_number + 1) }}"
+               class="interview-nav-button next-button">
+                Next Question →
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('complete_mock_interview', mock_id=mock_id) }}"
+               class="interview-nav-button finish-button">
+                ✅ Finish Mock Interview
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}
+EE Core - Section {{ section_number }}
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page core-test-page">
+
+    <div class="test-page-header">
+        <a href="{{ url_for('core') }}" class="back-link">
+            ← Back to EE Core
+        </a>
+
+        <span class="practice-label">ELECTRICAL ENGINEERING</span>
+        <h1>⚡ Section {{ section_number }} Assessment</h1>
+        <p>Test your understanding of electrical engineering concepts.</p>
+    </div>
+
+    <form method="POST">
+
+        <div class="core-test-info">
+            <div>
+                <span class="test-info-label">ASSESSMENT</span>
+                <h2>EE Core Practice Test</h2>
+            </div>
+
+            <span class="question-count">
+                {{ questions|length }} Questions
+            </span>
+        </div>
+
+        {% for q in questions %}
+
+        <div class="question-card core-question-card">
+
+            <div class="question-card-heading">
+                <span class="question-number">
+                    Question {{ loop.index }}
+                </span>
+
+                <span class="question-count-label">
+                    {{ loop.index }} / {{ questions|length }}
+                </span>
+            </div>
+
+            <h3 class="core-question-text">
+                {{ q.question }}
+            </h3>
+
+            <div class="answer-options">
+
+                <label class="answer-option" for="option_a_{{ q.id }}">
+                    <input type="radio"
+                           name="question_{{ q.id }}"
+                           value="A"
+                           id="option_a_{{ q.id }}">
+
+                    <span class="option-letter">A</span>
+                    <span class="option-text">{{ q.option_a }}</span>
+                </label>
+
+                <label class="answer-option" for="option_b_{{ q.id }}">
+                    <input type="radio"
+                           name="question_{{ q.id }}"
+                           value="B"
+                           id="option_b_{{ q.id }}">
+
+                    <span class="option-letter">B</span>
+                    <span class="option-text">{{ q.option_b }}</span>
+                </label>
+
+                <label class="answer-option" for="option_c_{{ q.id }}">
+                    <input type="radio"
+                           name="question_{{ q.id }}"
+                           value="C"
+                           id="option_c_{{ q.id }}">
+
+                    <span class="option-letter">C</span>
+                    <span class="option-text">{{ q.option_c }}</span>
+                </label>
+
+                <label class="answer-option" for="option_d_{{ q.id }}">
+                    <input type="radio"
+                           name="question_{{ q.id }}"
+                           value="D"
+                           id="option_d_{{ q.id }}">
+
+                    <span class="option-letter">D</span>
+                    <span class="option-text">{{ q.option_d }}</span>
+                </label>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="test-submit-section">
+            <p>Review your answers before submitting the section.</p>
+
+            <button type="submit" class="submit-test-button">
+                Submit Section →
+            </button>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

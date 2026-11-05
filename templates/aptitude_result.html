@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+
+{% block title %}Aptitude Result - NextHire{% endblock %}
+
+{% block content %}
+
+<section class="practice-page aptitude-result-page">
+
+    <div class="result-header">
+        <span class="practice-label">TEST COMPLETED</span>
+        <h1>🎯 Test {{ test_number }} Result</h1>
+        <p>Here's a breakdown of your performance.</p>
+    </div>
+
+    <!-- Score card -->
+    <div class="result-card">
+
+        <div class="result-icon">🏆</div>
+
+        <h2>Your Score</h2>
+
+        <div class="score">
+            {{ score }} <span>/ {{ total }}</span>
+        </div>
+
+        <div class="score-progress">
+            <div
+                class="score-progress-fill"
+                style="--score-progress: {{ (score / total * 100) if total else 0 }}%;">
+            </div>
+        </div>
+
+        <p class="score-percentage">
+            {{ "%.1f"|format((score / total * 100) if total else 0) }}% Score
+        </p>
+
+        {% if score == total %}
+            <p class="result-message perfect-result">🎉 Perfect Score! Outstanding work!</p>
+        {% elif total > 0 and score >= total * 0.7 %}
+            <p class="result-message great-result">🔥 Great job! Keep up the momentum!</p>
+        {% elif total > 0 and score >= total * 0.5 %}
+            <p class="result-message good-result">👍 Good attempt! There's room to improve.</p>
+        {% else %}
+            <p class="result-message improve-result">💪 Keep practicing! You'll get better.</p>
+        {% endif %}
+
+    </div>
+
+    <!-- Question review -->
+    <div class="review-heading">
+        <h2>📋 Question Review</h2>
+        <p>Review your answers and learn from your mistakes.</p>
+    </div>
+
+    {% for result in result_details %}
+
+    <div class="result-question-card">
+
+        <div class="review-card-header">
+            <span class="review-question-number">Question {{ loop.index }}</span>
+
+            {% if result.is_correct %}
+                <span class="review-status correct-status">✓ Correct</span>
+            {% else %}
+                <span class="review-status wrong-status">✕ Incorrect</span>
+            {% endif %}
+        </div>
+
+        <h3>{{ result.question }}</h3>
+
+        <div class="review-answer">
+
+            <p>
+                <strong>Your Answer:</strong>
+                {% if result.user_answer %}
+                    {{ result.user_answer }}
+                {% else %}
+                    <span class="not-answered">Not answered</span>
+                {% endif %}
+            </p>
+
+            {% if not result.is_correct %}
+                <p class="correct-answer">
+                    <strong>Correct Answer:</strong>
+                    {{ result.correct_answer }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <div class="result-footer">
+        <a href="{{ url_for('aptitude') }}" class="back-to-aptitude">
+            ← Back to Aptitude Practice
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

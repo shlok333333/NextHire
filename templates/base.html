@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}NextHire{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"
+    </head>
+    <body>
+        <nav class="navbar">
+            <h2 class="logo">NextHire</h2>
+            <div class="navlinks">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('courses') }}">Courses</a>
+                <a href="{{ url_for('interview') }}">Interview</a>
+                {% if "user_id" not in session %}    
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+                {% else %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+                {% endif %}
+                <a href="#">About</a>
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

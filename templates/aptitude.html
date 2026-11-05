@@ -1,0 +1,154 @@
+
+{% extends "base.html" %}
+
+{% block title %}Aptitude Practice - NextHire{% endblock %}
+
+{% block content %}
+
+<section class="practice-page aptitude-page">
+
+    <div class="practice-header">
+        <span class="practice-label">SHARPEN YOUR THINKING</span>
+        <h1>🧠 Aptitude Practice</h1>
+        <p>Improve your quantitative aptitude and reasoning skills.</p>
+    </div>
+
+    <!-- Progress overview -->
+    <div class="aptitude-progress">
+
+        <div class="aptitude-progress-heading">
+            <div>
+                <h2>📊 Your Progress</h2>
+                <p>Track your preparation and performance.</p>
+            </div>
+            <span class="overall-progress-label">{{ progress }}% Complete</span>
+        </div>
+
+        <div class="progress-stats">
+
+            <div class="stat-box">
+                <span class="stat-icon">📝</span>
+                <h3>{{ tests_completed }} / 10</h3>
+                <p>Tests Completed</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">📚</span>
+                <h3>{{ questions_attempted }}</h3>
+                <p>Questions Attempted</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">✅</span>
+                <h3>{{ questions_correct }}</h3>
+                <p>Questions Correct</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">🎯</span>
+                <h3>{{ accuracy }}%</h3>
+                <p>Accuracy</p>
+            </div>
+
+        </div>
+
+        <div class="overall-progress">
+            <div class="overall-progress-text">
+                <strong>Overall Progress</strong>
+                <span>{{ progress }}%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="--progress: {{ progress }}%;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Test section -->
+    <div class="aptitude-test-heading">
+        <h2>Choose Your Test</h2>
+        <p>Start with easy questions and gradually challenge yourself.</p>
+    </div>
+
+    <div class="aptitude-tests">
+
+        {% for test in tests %}
+
+        <div class="test-card">
+
+            <div class="test-card-top">
+
+                {% if test.number <= 3 %}
+                    <span class="test-level easy-level">Easy</span>
+                {% elif test.number <= 6 %}
+                    <span class="test-level medium-level">Medium</span>
+                {% elif test.number <= 9 %}
+                    <span class="test-level hard-level">Hard</span>
+                {% else %}
+                    <span class="test-level mock-level">Mock Test</span>
+                {% endif %}
+
+                {% if test.number in test_results %}
+                    <span class="test-completed">✓ Completed</span>
+                {% endif %}
+
+            </div>
+
+            <h3>
+                {% if test.number == 10 %}
+                    🏆 Mixed Mock Test
+                {% else %}
+                    🧠 Test {{ test.number }}
+                {% endif %}
+            </h3>
+
+            <p class="test-difficulty">{{ test.difficulty }}</p>
+
+            <div class="test-details">
+                <span>📋 {{ test.questions }} Questions</span>
+            </div>
+
+            {% if test.number in test_results %}
+
+                <div class="test-score">
+                    <strong>Previous Score</strong>
+                    <span>
+                        {{ test_results[test.number].score }}/{{ test_results[test.number].total }}
+                    </span>
+                </div>
+
+                <a
+                    href="{{ url_for('aptitude_test', test_number=test.number) }}"
+                    class="test-action"
+                >
+                    Retake Test →
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('aptitude_test', test_number=test.number) }}"
+                    class="test-action"
+                >
+                    {% if test.number == 10 %}
+                        Start Mock Test →
+                    {% else %}
+                        Start Test →
+                    {% endif %}
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

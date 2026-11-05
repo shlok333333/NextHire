@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}
+EE Core Result - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page core-result-page">
+
+    <!-- Result Heading -->
+    <div class="result-header">
+        <span class="practice-label">ELECTRICAL ENGINEERING</span>
+        <h1>⚡ Section {{ section_number }} - Results</h1>
+        <p>Review your performance and strengthen your EE fundamentals.</p>
+    </div>
+
+    <!-- Score Card -->
+    <div class="result-card core-score-card">
+
+        <div class="result-icon">🏆</div>
+
+        <h2>Your Score</h2>
+
+        <p class="score">{{ score }} / {{ total }}</p>
+
+        {% if total > 0 %}
+            {% set percentage = (score / total * 100) %}
+            <div class="core-score-progress">
+                <div class="core-score-progress-fill"
+                     style="--score-progress: {{ percentage }}%;">
+                </div>
+            </div>
+
+            <p class="score-percentage">
+                {{ percentage | round(2) }}% Accuracy
+            </p>
+        {% endif %}
+
+        <div class="result-message">
+
+            {% if total > 0 and score == total %}
+                <p class="perfect-result">🎉 Perfect Score! Outstanding work!</p>
+
+            {% elif total > 0 and score >= total * 0.8 %}
+                <p class="great-result">🔥 Excellent EE fundamentals!</p>
+
+            {% elif total > 0 and score >= total * 0.6 %}
+                <p class="good-result">👍 Good job! Keep practicing.</p>
+
+            {% elif total > 0 and score >= total * 0.4 %}
+                <p class="improve-result">📚 You need some more revision.</p>
+
+            {% else %}
+                <p class="improve-result">💪 Keep learning and try again!</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- Question Review -->
+    <div class="core-review-heading">
+        <span class="section-label">PERFORMANCE ANALYSIS</span>
+        <h2>📋 Question Review</h2>
+        <p>Understand your mistakes and learn from each question.</p>
+    </div>
+
+    {% for result in result_details %}
+
+    <div class="question-card core-review-card">
+
+        <div class="review-card-header">
+
+            <span class="review-question-number">
+                Question {{ loop.index }}
+            </span>
+
+            {% if result.is_correct %}
+                <span class="review-status correct-status">
+                    ✓ Correct
+                </span>
+            {% else %}
+                <span class="review-status wrong-status">
+                    ✕ Incorrect
+                </span>
+            {% endif %}
+
+        </div>
+
+        <h3>{{ result.question }}</h3>
+
+        {% if result.is_correct %}
+
+            <div class="review-answer correct-answer">
+                <strong>Your Answer</strong>
+                <p>{{ result.user_answer }}</p>
+            </div>
+
+        {% else %}
+
+            <div class="review-answer wrong-answer">
+                <strong>Your Answer</strong>
+                <p>
+                    {% if result.user_answer %}
+                        {{ result.user_answer }}
+                    {% else %}
+                        Not answered
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="review-answer correct-answer">
+                <strong>Correct Answer</strong>
+                <p>{{ result.correct_answer }}</p>
+            </div>
+
+        {% endif %}
+
+        <div class="core-explanation">
+            <strong>💡 Explanation</strong>
+            <p>{{ result.explanation }}</p>
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- Navigation -->
+    <div class="result-footer">
+        <a href="{{ url_for('core') }}" class="back-to-core">
+            ← Back to EE Core
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

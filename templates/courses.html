@@ -1,0 +1,58 @@
+
+{% extends "base.html" %}
+
+{% block title %}Courses - NextHire{% endblock %}
+
+{% block content %}
+
+<section class="courses-page">
+
+    <div class="courses-header">
+        <span class="courses-label">YOUR LEARNING PATH</span>
+        <h1>Explore Courses</h1>
+        <p>Choose an area and start preparing for your placements.</p>
+    </div>
+
+    <div class="course-grid">
+
+        <a href="{{ url_for('coding') }}" class="course-link">
+            <div class="course-card">
+                <div class="course-icon">💻</div>
+                <h2>Coding Practice</h2>
+                <p>Practice Python, DSA and programming problems to improve your problem-solving skills.</p>
+                <span class="course-action">Start Learning →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('aptitude') }}" class="course-link">
+            <div class="course-card">
+                <div class="course-icon">🧠</div>
+                <h2>Aptitude Practice</h2>
+                <p>Improve quantitative aptitude and reasoning skills through structured practice.</p>
+                <span class="course-action">Start Learning →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('interview') }}" class="course-link">
+            <div class="course-card">
+                <div class="course-icon">🎯</div>
+                <h2>Interview Preparation</h2>
+                <p>Prepare for technical and HR interview questions with guided practice.</p>
+                <span class="course-action">Start Learning →</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('core') }}" class="course-link">
+            <div class="course-card">
+                <div class="course-icon">⚡</div>
+                <h2>EE Core</h2>
+                <p>Prepare electrical engineering subjects and strengthen your core concepts.</p>
+                <span class="course-action">Start Learning →</span>
+            </div>
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

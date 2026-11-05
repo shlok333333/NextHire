@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard">
+    <h1>Hello, {{ session["user_name"] }}! 👋</h1>
+    <p class="dashboard-subtitle">Continue your placement journey 🚀</p>
+    <div class="dashboard-container">
+        <div class="dashboard-card">
+            <h2>💻 Coding</h2>
+            <p>Practice Python, DSA and programming problems.</p>
+            <a href="{{ url_for('coding') }}" class="dashboard-action">Start Practice</a>
+        </div>
+        <div class="dashboard-card">
+            <h2>🧠 Aptitude</h2>
+            <p>Improve your quantitative and reasoning skills.</p>
+            <a href="{{ url_for('aptitude') }}" class="dashboard-action">Start Practice</a>
+        </div>
+        <div class="dashboard-card">
+            <h2>🎯 Interview</h2>
+            <p>Prepare for technical and HR interviews.</p>
+            <a href="{{ url_for('interview') }}" class="dashboard-action">Start Practice</a>
+        </div>
+        <div class="dashboard-card">
+            <h2>⚡ Core EE</h2>
+            <p>Prepare electrical engineering subjects for core placements.</p>
+            <a href="{{ url_for('core') }}" class="dashboard-action">Start Practice</a>
+        </div>
+        <div class="dashboard-card">
+            <h2>📄 Resume Analysis</h2>
+            <p>Analyse your CV and improve its ATS score</p>
+            <a href="{{ url_for('resume_analyzer') }}" class="dashboard-action">Start Practice</a>
+        </div>
+    </div>
+    <div class="dashboard-progress">
+        <h2>📊 Your Progress</h2>
+        <div class="progress-card">
+            <div class="progress-card-header">
+                <h3>💻 Coding</h3>
+                <span>{{ coding_percentage }}%</span>
+            </div>
+            <p>{{ coding_solved }} / {{ coding_total }}Problems Solved</p>
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="--progress: {{ coding_percentage }}%;">
+                    {{ coding_percentage }}%
+                </div>
+            </div>
+        </div>
+        <div class="progress-card">
+            <div class="progress-card-header">
+                <h3>🧠 Aptitude</h3>
+                <span>{{ aptitude_percentage }}%</span>
+            </div>
+            <p>Aptitude Progress</p>
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="--progress: {{ aptitude_percentage }}%;">
+                    {{ aptitude_percentage }}%
+                </div>
+            </div>
+        </div>
+        <div class="progress-card">
+            <div class="progress-card-header">
+                <h3>🎤 Interview Preparation</h3>
+                <span>{{ interview_percentage }}%</span>
+            </div>
+            <p>{{ interview_practiced }} /{{ interview_total }}Questions Practiced</p>
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="--progress: {{ interview_percentage }}%;">
+                    {{ interview_percentage }}%
+                </div>
+            </div>
+            <a href="{{ url_for('interview') }} "class="progress-link">Practice Interview →</a>
+        </div>
+        <div class="progress-card">
+            <div class="progress-card-header">
+                <h3>⚡ EE Core</h3>
+                <span>{{ ee_percentage }}%</span>
+            </div>
+            <p>{{ ee_completed }} /{{ ee_total_sections }} Sections Completed</p>
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="--progress: {{ ee_percentage }}%;">
+                    {{ ee_percentage }}%
+                </div>
+            </div>
+            <a href="{{ url_for('core') }}" class="progress-link">Practice EE Core →</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

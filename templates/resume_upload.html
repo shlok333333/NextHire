@@ -1,0 +1,142 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+ATS Resume Analyzer - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="resume-page">
+
+    <!-- Page Header -->
+    <div class="resume-header">
+        <span class="resume-label">RESUME ANALYSIS</span>
+
+        <h1>📄 ATS Resume Analyzer</h1>
+
+        <p>
+            Upload your resume and discover how well it is structured
+            for Applicant Tracking Systems.
+        </p>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="resume-upload-card">
+
+        <div class="resume-upload-icon">
+            📁
+        </div>
+
+        <h2>Upload Your Resume</h2>
+
+        <p class="resume-upload-description">
+            Select your latest resume to get an ATS compatibility score
+            and actionable improvement suggestions.
+        </p>
+
+        <form method="POST"
+              enctype="multipart/form-data"
+              class="resume-upload-form">
+
+            <label for="resume-file" class="resume-file-label">
+                <span class="upload-icon">⬆️</span>
+                <strong>Choose your resume</strong>
+                <span>Click to browse files from your device</span>
+
+                <input
+                    type="file"
+                    id="resume-file"
+                    name="resume"
+                    accept=".pdf,.docx"
+                    required
+                >
+            </label>
+
+            <p id="selected-file" class="selected-file">
+                No file selected
+            </p>
+
+            <div class="resume-file-info">
+                <div>
+                    <span>📄</span>
+                    <strong>PDF / DOCX</strong>
+                    <small>Supported formats</small>
+                </div>
+
+                <div>
+                    <span>📦</span>
+                    <strong>5 MB</strong>
+                    <small>Maximum file size</small>
+                </div>
+            </div>
+
+            <button type="submit" class="resume-upload-button">
+                Analyze My Resume →
+            </button>
+
+        </form>
+
+        {% if message %}
+            <div class="resume-message">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        {% if filename %}
+            <div class="resume-upload-success">
+                <span>✅</span>
+                <div>
+                    <strong>Uploaded successfully</strong>
+                    <p>{{ filename }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Extracted Text -->
+    {% if extracted_text %}
+        <div class="extracted-text">
+
+            <h2>📖 Extracted Resume Text</h2>
+
+            <p>
+                This is the text extracted from your uploaded resume.
+            </p>
+
+            <pre>{{ extracted_text }}</pre>
+
+        </div>
+    {% endif %}
+
+    <!-- Information -->
+    <div class="resume-tips">
+
+        <h3>💡 Tips for Better Resume Analysis</h3>
+
+        <ul>
+            <li>Upload your latest version of your resume.</li>
+            <li>Include clearly labelled sections such as Education, Skills and Projects.</li>
+            <li>Use readable text rather than image-only documents.</li>
+            <li>Make sure your resume contains accurate contact information.</li>
+        </ul>
+
+    </div>
+
+</section>
+
+<script>
+    const resumeInput = document.getElementById("resume-file");
+    const selectedFile = document.getElementById("selected-file");
+
+    resumeInput.addEventListener("change", function () {
+        if (this.files.length > 0) {
+            selectedFile.textContent = "Selected: " + this.files[0].name;
+        } else {
+            selectedFile.textContent = "No file selected";
+        }
+    });
+</script>
+
+{% endblock %}

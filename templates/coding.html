@@ -1,0 +1,150 @@
+
+{% extends "base.html" %}
+
+{% block title %}Coding Practice - NextHire{% endblock %}
+
+{% block content %}
+
+<section class="practice-page">
+
+    <div class="practice-header">
+        <span class="practice-label">BUILD YOUR PROBLEM-SOLVING SKILLS</span>
+        <h1>💻 Coding Practice</h1>
+        <p>Solve programming problems and improve your coding skills.</p>
+    </div>
+
+    <div class="coding-filters">
+        <form method="get" action="{{ url_for('coding') }}" class="filter-form">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search problems..."
+                value="{{ search or '' }}"
+            >
+
+            <select name="topic">
+                <option value="">All Topics</option>
+                <option value="Arrays" {% if topic == "Arrays" %}selected{% endif %}>Arrays</option>
+                <option value="Strings" {% if topic == "Strings" %}selected{% endif %}>Strings</option>
+                <option value="Searching" {% if topic == "Searching" %}selected{% endif %}>Searching</option>
+                <option value="Sorting" {% if topic == "Sorting" %}selected{% endif %}>Sorting</option>
+                <option value="Hashing" {% if topic == "Hashing" %}selected{% endif %}>Hashing</option>
+                <option value="Stack & Queue" {% if topic == "Stack & Queue" %}selected{% endif %}>Stack & Queue</option>
+                <option value="Recursion" {% if topic == "Recursion" %}selected{% endif %}>Recursion</option>
+                <option value="Trees" {% if topic == "Trees" %}selected{% endif %}>Trees</option>
+            </select>
+
+            <select name="difficulty">
+                <option value="">All Difficulties</option>
+                <option value="Easy" {% if difficulty == "Easy" %}selected{% endif %}>Easy</option>
+                <option value="Medium" {% if difficulty == "Medium" %}selected{% endif %}>Medium</option>
+                <option value="Hard" {% if difficulty == "Hard" %}selected{% endif %}>Hard</option>
+            </select>
+
+            <select name="sort">
+                <option value="newest" {% if sort == "newest" %}selected{% endif %}>Newest</option>
+                <option value="oldest" {% if sort == "oldest" %}selected{% endif %}>Oldest</option>
+                <option value="title_asc" {% if sort == "title_asc" %}selected{% endif %}>Title A-Z</option>
+                <option value="title_desc" {% if sort == "title_desc" %}selected{% endif %}>Title Z-A</option>
+            </select>
+
+            <button type="submit" class="filter-button">Apply Filters</button>
+
+        </form>
+
+        <a href="{{ url_for('coding') }}" class="clear-filter">
+            Clear Filters
+        </a>
+    </div>
+
+    <div class="problem-summary">
+        <p>
+            <strong>{{ total_problems }}</strong>
+            {% if total_problems == 1 %}problem{% else %}problems{% endif %} found
+        </p>
+        <span>Showing {{ problems|length }} of {{ total_problems }} problems</span>
+    </div>
+
+    <div class="coding-container">
+
+        {% if problems %}
+
+            {% for problem in problems %}
+
+                <div class="coding-card">
+
+                    <div class="coding-card-top">
+                        <span class="problem-number">Problem #{{ problem.id }}</span>
+
+                        {% if problem.id in solved %}
+                            <span class="status-badge solved">✓ Solved</span>
+                        {% else %}
+                            <span class="status-badge unsolved">Not Solved</span>
+                        {% endif %}
+                    </div>
+
+                    <h2>
+                        <a href="{{ url_for('coding_problem', problem_id=problem.id) }}">
+                            {{ problem.title }}
+                        </a>
+                    </h2>
+
+                    <p class="problem-description">
+                        {{ problem.description }}
+                    </p>
+
+                    <div class="problem-card-footer">
+                        <span class="difficulty-badge difficulty-{{ problem.difficulty|lower }}">
+                            {{ problem.difficulty }}
+                        </span>
+
+                        <a
+                            href="{{ url_for('coding_problem', problem_id=problem.id) }}"
+                            class="solve-button"
+                        >
+                            Solve Problem →
+                        </a>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="no-problems">
+                <h2>🔍 No problems found</h2>
+                <p>Try changing your search or filters to find problems.</p>
+                <a href="{{ url_for('coding') }}" class="solve-button">
+                    Clear Filters
+                </a>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    {% if total_pages > 1 %}
+        <div class="pagination">
+
+            {% if page > 1 %}
+                <a href="{{ url_for('coding', page=page-1, search=search, topic=topic, difficulty=difficulty, sort=sort) }}">
+                    ← Previous
+                </a>
+            {% endif %}
+
+            <span>Page {{ page }} of {{ total_pages }}</span>
+
+            {% if total_pages > page %}
+                <a href="{{ url_for('coding', page=page+1, search=search, topic=topic, difficulty=difficulty, sort=sort) }}">
+                    Next →
+                </a>
+            {% endif %}
+
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

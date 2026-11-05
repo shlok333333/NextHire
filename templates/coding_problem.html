@@ -1,0 +1,181 @@
+
+{% extends "base.html" %}
+
+{% block title %}NextHire - {{ problem.title }}{% endblock %}
+
+{% block content %}
+
+<section class="problem-workspace">
+
+    <!-- Problem heading -->
+    <div class="problem-heading">
+        <a href="{{ url_for('coding') }}" class="back-link">← Back to Coding Practice</a>
+
+        <h1>{{ problem.title }}</h1>
+
+        <div class="problem-meta">
+            <span class="difficulty-badge difficulty-{{ problem.difficulty|lower }}">
+                {{ problem.difficulty }}
+            </span>
+            <span class="language-badge">Language: {{ problem.language }}</span>
+        </div>
+    </div>
+
+    <!-- Problem description -->
+    <div class="workspace-card">
+        <h2>📝 Problem Description</h2>
+        <p class="problem-full-description">{{ problem.description }}</p>
+
+        <div class="sample-grid">
+            <div class="sample-box">
+                <h3>Sample Input</h3>
+                <pre>{{ problem.sample_input }}</pre>
+            </div>
+
+            <div class="sample-box">
+                <h3>Sample Output</h3>
+                <pre>{{ problem.sample_output }}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code editor -->
+    <div class="workspace-card editor-card">
+        <div class="editor-heading">
+            <div>
+                <h2>⌨️ Write Your Code</h2>
+                <p>Write your solution and test it before submitting.</p>
+            </div>
+            <span class="editor-language">{{ problem.language }}</span>
+        </div>
+
+        <form method="post">
+
+            <label for="code" class="editor-label">Your Code</label>
+
+            <div class="code-editor">
+                <textarea
+                    id="code"
+                    name="code"
+                    rows="15"
+                    spellcheck="false"
+                    placeholder="Write your Python code here..."
+                >{{ submitted_code or "" }}</textarea>
+            </div>
+
+            <label for="custom_input" class="editor-label">Custom Input</label>
+
+            <textarea
+                id="custom_input"
+                class="custom-input"
+                name="custom_input"
+                rows="5"
+                placeholder="Enter custom input here..."
+            >{{ custom_input or "" }}</textarea>
+
+            <div class="editor-actions">
+                <button
+                    type="submit"
+                    name="action"
+                    value="run"
+                    class="run-button"
+                >
+                    ▶ Run Code
+                </button>
+
+                <button
+                    type="submit"
+                    name="action"
+                    value="submit"
+                    class="submit-button"
+                >
+                    ✓ Submit Solution
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Execution output -->
+    {% if output or error or result or failed_test %}
+
+    <div class="workspace-card execution-card">
+        <h2>📊 Execution Results</h2>
+
+        {% if result %}
+            <div class="result-banner">
+                {{ result }}
+            </div>
+
+            <div class="test-summary">
+                <strong>Test cases passed:</strong>
+                {{ passed_tests }}/{{ test_cases|length }}
+            </div>
+        {% endif %}
+
+        {% if output %}
+            <div class="output-panel">
+                <h3>Output</h3>
+                <pre>{{ output }}</pre>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error-panel">
+                <h3>⚠️ Error</h3>
+                <pre>{{ error }}</pre>
+            </div>
+        {% endif %}
+
+        {% if failed_test %}
+            <div class="failed-test-panel">
+                <h3>Failed Test Case: {{ failed_test }}</h3>
+
+                <div class="sample-grid">
+                    <div class="sample-box">
+                        <h3>Your Output</h3>
+                        <pre>{{ output }}</pre>
+                    </div>
+
+                    <div class="sample-box">
+                        <h3>Expected Output</h3>
+                        <pre>{{ exp_output }}</pre>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% endif %}
+
+    <!-- Submission history -->
+    <div class="workspace-card history-section">
+        <h2>📜 Submission History</h2>
+
+        {% if history %}
+
+            {% for sub in history %}
+
+                <div class="history-card">
+                    <div class="history-header">
+                        <strong>{{ sub.status }}</strong>
+                        <span>{{ sub.passed_tests }}/{{ sub.total_tests }} tests passed</span>
+                    </div>
+
+                    <p>Submitted: {{ sub.submitted_at }}</p>
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-history">
+                <p>No submissions yet. Write your first solution!</p>
+            </div>
+
+        {% endif %}
+    </div>
+
+</section>
+
+{% endblock %}

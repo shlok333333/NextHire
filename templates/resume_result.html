@@ -1,0 +1,228 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+ATS Resume Results - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="resume-page resume-results-page">
+
+    <!-- Header -->
+    <div class="resume-results-header">
+
+        <span class="resume-label">ATS ANALYSIS REPORT</span>
+
+        <h1>📊 Your Resume Report</h1>
+
+        <p class="resume-file-name">
+            Analyzed file: <strong>{{ filename }}</strong>
+        </p>
+
+    </div>
+
+    <!-- Overall Score -->
+    <div class="resume-result-card overall-score-card">
+
+        <div class="score-card-heading">
+            <span>Overall ATS Score</span>
+            <span class="score-icon">🏆</span>
+        </div>
+
+        <div class="ats-score">
+            {{ report.total_score }}<span>/100</span>
+        </div>
+
+        <div class="ats-score-track">
+            <div class="ats-score-fill"
+                 style="--score: {{ report.total_score }}%;">
+            </div>
+        </div>
+
+        <p>Your resume analysis is complete!</p>
+
+        <small>
+            This score reflects basic resume structure and ATS-readiness checks.
+        </small>
+
+    </div>
+
+    <!-- Score Breakdown -->
+    <div class="resume-result-card">
+
+        <div class="resume-card-heading">
+            <span class="section-icon">📋</span>
+            <div>
+                <h2>Score Breakdown</h2>
+                <p>Understand how your resume performed in each category.</p>
+            </div>
+        </div>
+
+        <div class="ats-table-wrapper">
+
+            <table class="ats-table">
+
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Contact Information</td>
+                        <td>{{ report.contact }}/10</td>
+                    </tr>
+
+                    <tr>
+                        <td>Resume Sections</td>
+                        <td>{{ report.sections }}/15</td>
+                    </tr>
+
+                    <tr>
+                        <td>Education</td>
+                        <td>{{ report.education }}/10</td>
+                    </tr>
+
+                    <tr>
+                        <td>Technical Skills</td>
+                        <td>{{ report.skills }}/15</td>
+                    </tr>
+
+                    <tr>
+                        <td>Projects</td>
+                        <td>{{ report.projects }}/15</td>
+                    </tr>
+
+                    <tr>
+                        <td>Experience / Internship</td>
+                        <td>{{ report.experience }}/15</td>
+                    </tr>
+
+                    <tr>
+                        <td>Relevant Keywords</td>
+                        <td>{{ report.keywords }}/10</td>
+                    </tr>
+
+                    <tr>
+                        <td>ATS Formatting</td>
+                        <td>{{ report.formatting }}/10</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Detected Skills -->
+    <div class="resume-result-card">
+
+        <div class="resume-card-heading">
+            <span class="section-icon">🛠️</span>
+            <div>
+                <h2>Detected Technical Skills</h2>
+                <p>Technical skills recognized in your resume.</p>
+            </div>
+        </div>
+
+        {% if report.detected_skills %}
+
+            <div class="detected-skills-list">
+
+                {% for skill in report.detected_skills %}
+                    <span class="skill-tag">{{ skill }}</span>
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="resume-empty-message">
+                No recognized technical skills detected.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Missing Sections -->
+    <div class="resume-result-card">
+
+        <div class="resume-card-heading">
+            <span class="section-icon warning-icon">⚠️</span>
+            <div>
+                <h2>Missing Resume Sections</h2>
+                <p>Sections that our analyzer could not identify.</p>
+            </div>
+        </div>
+
+        {% if report.missing_sections %}
+
+            <ul class="resume-feedback-list missing-list">
+
+                {% for section in report.missing_sections %}
+                    <li>{{ section }}</li>
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p class="resume-success-message">
+                ✅ All expected sections were detected!
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Suggestions -->
+    <div class="resume-result-card">
+
+        <div class="resume-card-heading">
+            <span class="section-icon suggestion-icon">💡</span>
+            <div>
+                <h2>Suggestions for Improvement</h2>
+                <p>Actionable ways to improve your resume.</p>
+            </div>
+        </div>
+
+        {% if report.suggestions %}
+
+            <ul class="resume-feedback-list suggestions-list">
+
+                {% for suggestion in report.suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p class="resume-success-message">
+                🎉 Your resume passed all our basic checks!
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Action -->
+    <div class="resume-results-footer">
+
+        <a href="{{ url_for('resume_analyzer') }}"
+           class="analyze-another-button">
+            🔄 Analyze Another Resume
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

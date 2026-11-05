@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+EE Core - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page core-page">
+
+    <div class="practice-header">
+        <span class="practice-label">ELECTRICAL ENGINEERING</span>
+        <h1>⚡ EE Core Preparation</h1>
+        <p>Strengthen your electrical engineering concepts and prepare for technical placement rounds.</p>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="core-progress">
+        <div class="core-progress-heading">
+            <div>
+                <span class="section-label">YOUR PERFORMANCE</span>
+                <h2>📊 EE Core Progress</h2>
+            </div>
+            <span class="core-progress-count">{{ sections_completed }} / 4 Sections</span>
+        </div>
+
+        <div class="progress-stats">
+            <div class="stat-box">
+                <span class="stat-icon">📚</span>
+                <h3>{{ sections_completed }} / 4</h3>
+                <p>Sections Completed</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">📝</span>
+                <h3>{{ questions_attempted }}</h3>
+                <p>Questions Attempted</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">✅</span>
+                <h3>{{ questions_correct }}</h3>
+                <p>Questions Correct</p>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">🎯</span>
+                <h3>{{ accuracy }}%</h3>
+                <p>Accuracy</p>
+            </div>
+        </div>
+
+        <div class="overall-progress">
+            <div class="overall-progress-text">
+                <span>Overall Progress</span>
+                <strong>{{ progress }}%</strong>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     style="--progress: {{ progress }}%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EE Core Sections -->
+    <div class="core-section-heading">
+        <div>
+            <span class="section-label">LEARNING PATH</span>
+            <h2>Explore Core Subjects</h2>
+            <p>Choose a section and test your electrical engineering knowledge.</p>
+        </div>
+    </div>
+
+    <div class="core-sections">
+
+        {% for section in sections %}
+        <div class="core-card">
+
+            <div class="core-card-top">
+                <span class="core-section-number">
+                    SECTION {{ section.number }}
+                </span>
+                <span class="core-icon">⚡</span>
+            </div>
+
+            <h3>{{ section.title }}</h3>
+
+            <p class="core-question-count">
+                <icon-placeholder></icon-placeholder>
+                {{ section.questions }} Questions
+            </p>
+
+            {% if section.number in section_results %}
+
+                <div class="core-completed">
+                    <span>✓ Completed</span>
+                    <strong>
+                        {{ section_results[section.number].score }}/{{ section_results[section.number].total }}
+                    </strong>
+                </div>
+
+                <a class="core-action completed-action"
+                   href="{{ url_for('core_section', section_number=section.number) }}">
+                    Retake Section →
+                </a>
+
+            {% else %}
+
+                <div class="core-pending">
+                    <span>Not attempted yet</span>
+                </div>
+
+                <a class="core-action"
+                   href="{{ url_for('core_section', section_number=section.number) }}">
+                    Start Section →
+                </a>
+
+            {% endif %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

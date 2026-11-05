@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+Mock Interview History - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page">
+    <h1>🎤 Mock Interview History</h1>
+    {% if mock_interviews %}
+        <div class="interview-history">
+            {% for mock in mock_interviews %}
+                <div class="interview-question-card">
+                    <h2>Mock Interview #{{ mock.id }}</h2>
+                    <p><strong>Questions:</strong>{{ mock.answered_questions }}/{{ mock.total_questions }}</p>
+                    <p><strong>Started:</strong>{{ mock.started_at }}</p>
+                    <p>
+                        <strong>Status:</strong>
+                        {% if mock.completed_at %}
+                            ✅ Completed
+                        {% else %}
+                            🟡 Incomplete
+                        {% endif %}
+                    </p>
+                    {% if mock.completed_at %}
+                        <a href="{{ url_for('mock_result',mock_id=mock.id) }}">View Result</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="interview-question-card">
+            <h2>No Mock Interviews Yet</h2>
+            <p>You haven't completed a mock interview yet.</p>
+            <a href="{{ url_for('start_mock_interview') }}">🎤 Start Your First Mock</a>
+        </div>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+.env
+.env.*
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+uploads/resumes/*
+!uploads/resumes/.gitkeep
+instance/
+.vscode/
+.DS_Store
+Thumbs.db

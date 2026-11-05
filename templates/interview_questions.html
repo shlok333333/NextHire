@@ -1,0 +1,98 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+{{ category }} Interview - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page interview-all-page">
+
+    <!-- Page Header -->
+    <div class="interview-all-header">
+
+        <a href="{{ url_for('interview') }}" class="back-link">
+            ← Back to Interview Categories
+        </a>
+
+        <span class="practice-label">INTERVIEW PREPARATION</span>
+
+        <h1>🎤 {{ category }} Interview</h1>
+
+        <p>
+            Practice these interview questions and review sample answers,
+            important concepts, and common mistakes.
+        </p>
+
+    </div>
+
+    <!-- Questions -->
+    {% for q in questions %}
+
+    <div class="interview-question-card all-question-card">
+
+        <div class="all-question-header">
+
+            <span class="interview-question-number">
+                Question {{ loop.index }}
+            </span>
+
+            <span class="interview-difficulty difficulty-{{ q.difficulty|lower }}">
+                {{ q.difficulty }}
+            </span>
+
+        </div>
+
+        <h2 class="all-question-title">
+            {{ q.question }}
+        </h2>
+
+        <!-- Interviewer Expectations -->
+        <div class="interview-section expectation-section">
+
+            <h3>🎯 What the Interviewer Expects</h3>
+            <p>{{ q.what_interviewer_expects }}</p>
+
+        </div>
+
+        <!-- Sample Answer -->
+        <div class="interview-section sample-answer-section">
+
+            <h3>💡 Sample Answer</h3>
+            <p>{{ q.sample_answer }}</p>
+
+        </div>
+
+        <!-- Key Points -->
+        <div class="interview-section key-points-section">
+
+            <h3>📌 Key Points to Remember</h3>
+            <p>{{ q.key_points }}</p>
+
+        </div>
+
+        <!-- Common Mistakes -->
+        <div class="interview-section mistakes-section">
+
+            <h3>⚠️ Common Mistakes to Avoid</h3>
+            <p>{{ q.common_mistakes }}</p>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- Footer -->
+    <div class="interview-all-footer">
+
+        <a href="{{ url_for('interview') }}" class="back-to-interview">
+            ← Back to Interview Categories
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

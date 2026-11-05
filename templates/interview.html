@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Interview Preparation - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page interview-page">
+
+    <!-- Page Header -->
+    <div class="interview-header">
+        <span class="practice-label">PLACEMENT READINESS</span>
+        <h1>🎤 Interview Preparation</h1>
+        <p>
+            Build confidence for HR, technical, programming and behavioral
+            interviews through practical questions and guided answers.
+        </p>
+    </div>
+
+    <!-- Mock Interview Actions -->
+    <div class="mock-interview-banner">
+
+        <div class="mock-banner-content">
+            <span class="mock-label">TEST YOUR READINESS</span>
+            <h2>Ready for a Mock Interview?</h2>
+            <p>
+                Experience a practice interview with randomly selected
+                questions and review your answers afterward.
+            </p>
+        </div>
+
+        <div class="mock-banner-actions">
+            <a href="{{ url_for('start_mock_interview') }}"
+               class="mock-start-button">
+                🎤 Start Mock Interview →
+            </a>
+
+            <a href="{{ url_for('mock_history') }}"
+               class="mock-history-button">
+                📊 View Interview History
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Category Heading -->
+    <div class="interview-section-heading">
+        <span class="section-label">YOUR LEARNING PATH</span>
+        <h2>Explore Interview Categories</h2>
+        <p>
+            Select a category and practice questions at your own pace.
+        </p>
+    </div>
+
+    <!-- Category Cards -->
+    <div class="interview-categories">
+
+        {% for category in categories %}
+
+        <div class="interview-card">
+
+            <div class="interview-card-top">
+                <div class="interview-icon">
+                    {{ category.icon }}
+                </div>
+
+                <span class="interview-question-total">
+                    {{ category.total_questions }} Questions
+                </span>
+            </div>
+
+            <h2>{{ category.title }}</h2>
+
+            <p class="interview-description">
+                {{ category.description }}
+            </p>
+
+            <div class="interview-progress-info">
+                <span>Questions Practiced</span>
+                <strong>
+                    {{ category.practiced_questions }}/{{ category.total_questions }}
+                </strong>
+            </div>
+
+            <div class="progress-bar interview-progress-bar">
+                <div class="progress-fill"
+                     style="--progress: {{ category.percentage }}%;">
+                </div>
+            </div>
+
+            <div class="interview-progress-percentage">
+                {{ category.percentage }}% Completed
+            </div>
+
+            <a href="{{ url_for('interview_question', category=category.name, question_number=1) }}"
+               class="interview-practice-button">
+                Start Practice →
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

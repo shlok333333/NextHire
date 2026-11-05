@@ -1,0 +1,115 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Mock Interview Result - NextHire
+{% endblock %}
+
+{% block content %}
+
+<section class="practice-page mock-results-page">
+
+    <!-- Completion Header -->
+    <div class="mock-results-header">
+
+        <div class="completion-icon">🎉</div>
+
+        <span class="practice-label">MOCK INTERVIEW COMPLETED</span>
+
+        <h1>Congratulations!</h1>
+
+        <p>
+            Great job! You have successfully completed your mock interview.
+            Keep practicing to improve your placement readiness.
+        </p>
+
+    </div>
+
+    <!-- Completion Card -->
+    <div class="interview-question-card mock-completion-card">
+
+        <h2>Your Interview Summary</h2>
+
+        <p class="completion-message">
+            Here's a summary of your mock interview performance.
+        </p>
+
+        <!-- Statistics -->
+        <div class="mock-result-stats">
+
+            <div class="mock-result-stat">
+                <span class="mock-stat-icon">📚</span>
+                <h3>{{ mock.total_questions }}</h3>
+                <p>Total Questions</p>
+            </div>
+
+            <div class="mock-result-stat">
+                <span class="mock-stat-icon">✅</span>
+                <h3>{{ mock.answered_questions }}</h3>
+                <p>Questions Answered</p>
+            </div>
+
+        </div>
+
+        <!-- Completion Progress -->
+        <div class="mock-completion-progress">
+
+            <div class="mock-completion-progress-info">
+                <span>Answer Completion</span>
+
+                <strong>
+                    {{ ((mock.answered_questions / mock.total_questions * 100) | round(0)) if mock.total_questions > 0 else 0 }}%
+                </strong>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     style="--progress: {{ ((mock.answered_questions / mock.total_questions * 100) if mock.total_questions > 0 else 0) }}%;">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Interview Timeline -->
+        <div class="mock-timeline">
+
+            <h3>🕒 Interview Timeline</h3>
+
+            <div class="timeline-item">
+                <span class="timeline-icon">🚀</span>
+
+                <div>
+                    <strong>Started</strong>
+                    <p>{{ mock.started_at }}</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-icon">🏁</span>
+
+                <div>
+                    <strong>Completed</strong>
+                    <p>{{ mock.completed_at }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="mock-results-actions">
+
+        <a href="{{ url_for('interview') }}" class="mock-back-button">
+            ← Back to Interview Preparation
+        </a>
+
+        <a href="{{ url_for('start_mock_interview') }}" class="mock-again-button">
+            🔄 Start Another Mock
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
