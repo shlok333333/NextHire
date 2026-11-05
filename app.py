@@ -11,6 +11,7 @@ from docx import Document
 from resume_analyzer import analyze_resume
 from dotenv import load_dotenv
 load_dotenv(override=True)
+db_port = int(os.getenv("DB_PORT") or "3306")
 db = mysql.connector.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"),port=int(os.getenv("DB_PORT", "3306")))
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"]=os.path.join(app.root_path,"uploads","resumes")
