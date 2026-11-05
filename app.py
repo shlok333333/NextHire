@@ -21,15 +21,6 @@ DB_NAME = os.getenv("DB_NAME") or "nexthire"
 
 DB_PORT = int(os.getenv("DB_PORT") or "3306")
 
-# Connect to MySQL
-db = mysql.connector.connect(
-    host=DB_HOST,
-    user=DB_USER,
-    password=DB_PASSWORD,
-    database=DB_NAME,
-    port=DB_PORT
-)
-
 print("========== DATABASE DEBUG ==========")
 
 print("DB_HOST:", repr(os.getenv("DB_HOST")))
@@ -38,6 +29,15 @@ print("DB_NAME:", repr(os.getenv("DB_NAME")))
 print("DB_PORT:", repr(os.getenv("DB_PORT")))
 
 print("=====================================")
+
+# Connect to MySQL
+db = mysql.connector.connect(
+    host=DB_HOST,
+    user=DB_USER,
+    password=DB_PASSWORD,
+    database=DB_NAME,
+    port=DB_PORT
+)
 
 
 app = Flask(__name__)
