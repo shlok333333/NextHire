@@ -13,32 +13,13 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 
-# Read database configuration
 DB_HOST = os.getenv("DB_HOST") or "localhost"
 DB_USER = os.getenv("DB_USER") or "root"
 DB_PASSWORD = os.getenv("DB_PASSWORD") or ""
 DB_NAME = os.getenv("DB_NAME") or "nexthire"
-
 DB_PORT = int(os.getenv("DB_PORT") or "3306")
 
-print("========== DATABASE DEBUG ==========")
-
-print("DB_HOST:", repr(os.getenv("DB_HOST")))
-print("DB_USER:", repr(os.getenv("DB_USER")))
-print("DB_NAME:", repr(os.getenv("DB_NAME")))
-print("DB_PORT:", repr(os.getenv("DB_PORT")))
-
-print("=====================================")
-
-# Connect to MySQL
-db = mysql.connector.connect(
-    host=DB_HOST,
-    user=DB_USER,
-    password=DB_PASSWORD,
-    database=DB_NAME,
-    port=DB_PORT
-)
-
+db = mysql.connector.connect(host=DB_HOST,user=DB_USER,password=DB_PASSWORD,database=DB_NAME,port=DB_PORT)
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"]=os.path.join(app.root_path,"uploads","resumes")
