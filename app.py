@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, send_from_directory
 import mysql.connector
 from code_runner import run_python_code
 from math import ceil
@@ -22,6 +22,9 @@ DB_PORT = int(os.getenv("DB_PORT") or "3306")
 db = mysql.connector.connect(host=DB_HOST,user=DB_USER,password=DB_PASSWORD,database=DB_NAME,port=DB_PORT)
 
 app = Flask(__name__)
+@app.route("/google5c99acca0cdb604c.html")
+def google_verification():
+    return send_from_directory(app.root_path,"google5c99acca0cdb604c.html")
 app.config["UPLOAD_FOLDER"]=os.path.join(app.root_path,"uploads","resumes")
 app.config["MAX_CONTENT_LENGTH"]=5*1024*1024
 ALLOWED_EXTENSIONS={"pdf","docx"}
